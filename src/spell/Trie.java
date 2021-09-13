@@ -2,7 +2,7 @@ package spell;
 
 public class Trie implements  ITrie {
 
-    private Node root;
+    private Node root = new Node();
     private int wordCount = 0;
     private int nodeCount = 1;
 
@@ -62,6 +62,10 @@ public class Trie implements  ITrie {
             }
             else
             {
+                if (n.getChildren()[index].getValue() == 0)
+                {
+                    wordCount = wordCount + 1;
+                }
                 n.getChildren()[index].incrementValue();
             }
             return;
@@ -102,9 +106,14 @@ public class Trie implements  ITrie {
         }
 
         //if this is the last letter then return the node
-        if (word.length() == 1)
+        if ((word.length() == 1) && (n.getChildren()[index].getValue() > 0))
         {
             return n.getChildren()[index];
+        }
+
+        if ((word.length() == 1) && (n.getChildren()[index].getValue() == 0))
+        {
+            return null;
         }
 
         //if it is not the last letter then recurse
