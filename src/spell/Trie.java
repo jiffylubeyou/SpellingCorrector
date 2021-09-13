@@ -3,17 +3,113 @@ package spell;
 public class Trie implements  ITrie {
 
     private Node root;
-    private int wordCount;
-    private int nodeCount;
+    private int wordCount = 0;
+    private int nodeCount = 1;
 
     @Override
-    public void add(String word) {
+    public void add(String word)
+    {
+        String myWord = word.toLowerCase();
+        char myChar = myWord.charAt(0);
+        int index = myChar - 'a';
 
+        //see if this is a one letter word
+        if (myWord.length() == 1)
+        {
+            if (root.getChildren()[index] == null)
+            {
+                root.getChildren()[index] = new Node();
+                nodeCount = nodeCount + 1;
+                root.getChildren()[index].incrementValue();
+                wordCount = wordCount + 1;
+            }
+            else
+            {
+                root.getChildren()[index].incrementValue();
+            }
+            return;
+        }
+
+        //if it has more than one letter then start recursion
+        myWord = myWord.substring(1);
+        if (root.getChildren()[index] == null)
+        {
+            root.getChildren()[index] = new Node();
+            nodeCount = nodeCount + 1;
+            add_Helper(myWord, root.getChildren()[index]);
+            return;
+        }
+        else
+        {
+            add_Helper(myWord, root.getChildren()[index]);
+            return;
+        }
+    }
+
+    private void add_Helper (String word, Node n)
+    {
+        char myChar = word.charAt(0);
+        int index = myChar - 'a';
+
+        //see if this is the last letter
+        if (word.length() == 1)
+        {
+            if (n.getChildren()[index] == null) {
+                n.getChildren()[index] = new Node();
+                nodeCount = nodeCount + 1;
+                n.getChildren()[index].incrementValue();
+                wordCount = wordCount + 1;
+            }
+            else
+            {
+                n.getChildren()[index].incrementValue();
+            }
+            return;
+        }
+
+        //if it is not the last letter then recurse
+        word = word.substring(1);
+        if (n.getChildren()[index] == null)
+        {
+            n.getChildren()[index] = new Node();
+            nodeCount = nodeCount + 1;
+            add_Helper(word, n.getChildren()[index]);
+            return;
+        }
+        else
+        {
+            add_Helper(word, n.getChildren()[index]);
+            return;
+        }
     }
 
     @Override
-    public INode find(String word) {
-        return null;
+    public Node find(String word)
+    {
+        String myWord = word.toLowerCase();
+        return find_Helper(myWord, root);
+    }
+
+    private Node find_Helper(String word, Node n)
+    {
+        char myChar = word.charAt(0);
+        int index = myChar - 'a';
+
+        //if it is not found then return null
+        if (n.getChildren()[index] == null)
+        {
+            return null;
+        }
+
+        //if this is the last letter then return the node
+        if (word.length() == 1)
+        {
+            return n.getChildren()[index];
+        }
+
+        //if it is not the last letter then recurse
+        word = word.substring(1);
+        return find_Helper(word, n.getChildren()[index]);
     }
 
     @Override
