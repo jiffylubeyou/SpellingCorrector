@@ -106,4 +106,18 @@ public class Trie implements  ITrie {
         }
         return true;
     }
+
+    @Override
+    public int hashCode ()
+    {
+        int sum = 0;
+        for (int i = 0; i < root.getChildren().length; i++)
+        {
+            if (root.getChildren()[i] != null)
+            {
+                sum = sum + i;
+            }
+        }
+        return (wordCount + nodeCount + sum);
+    }
 }
