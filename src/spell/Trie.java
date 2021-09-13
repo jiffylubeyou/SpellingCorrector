@@ -25,6 +25,10 @@ public class Trie implements  ITrie {
             }
             else
             {
+                if (root.getChildren()[index].getValue() == 0)
+                {
+                    wordCount = wordCount + 1;
+                }
                 root.getChildren()[index].incrementValue();
             }
             return;
@@ -223,6 +227,6 @@ public class Trie implements  ITrie {
                 sum = sum + i;
             }
         }
-        return (wordCount + nodeCount + sum);
+        return (wordCount + nodeCount + sum)*nodeCount;
     }
 }
