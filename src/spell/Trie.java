@@ -210,7 +210,14 @@ public class Trie implements  ITrie {
         {
             if (n1.getChildren()[i] != null && n2.getChildren()[i] != null)
             {
-                equals_Helper(n1.getChildren()[i], n2.getChildren()[i]);
+                if (equals_Helper(n1.getChildren()[i], n2.getChildren()[i]))
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         return true;
