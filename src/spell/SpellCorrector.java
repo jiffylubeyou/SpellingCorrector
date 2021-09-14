@@ -29,9 +29,33 @@ public class SpellCorrector implements ISpellCorrector {
         TreeMap<String, Integer> deletionsMap = getPossibleDeletions(inputWord);
         TreeMap<String, Integer> transpositionsMap = getPossibleTranspositions(inputWord);
         TreeMap<String, Integer> alterationsMap = getPossibleAlterations(inputWord);
-        TreeMap<String, Integer> InsertionsMap = getPossibleInsertions(inputWord);
+        TreeMap<String, Integer> insertionsMap = getPossibleInsertions(inputWord);
 
-        //search trie for each word and add to another found set
+        //add em all up
+        TreeMap<String, Integer> allMap = new TreeMap<String, Integer>();
+        allMap.putAll(deletionsMap);
+        allMap.putAll(transpositionsMap);
+        allMap.putAll(alterationsMap);
+        allMap.putAll(insertionsMap);
+
+        //if only one found, send it
+        if (allMap.size() == 1)
+        {
+            for (String name: allMap.keySet())
+            {
+                return name;
+            }
+        }
+
+        //if more than one found
+        if (allMap.size() > 1)
+        {
+            for (String name: allMap.keySet())
+            {
+
+            }
+        }
+
         //1. if only one is found, return
         //return frequency of each and highest returned
         //deal with other tie breakers
