@@ -47,18 +47,43 @@ public class SpellCorrector implements ISpellCorrector {
             }
         }
 
-        //if more than one found
+        //if more than one found find most used
         if (allMap.size() > 1)
+        {
+            int max = 1;
+            TreeMap<String, Integer> allMap2 = new TreeMap<String, Integer>();
+            for (String name: allMap.keySet())
+            {
+                int myInt = allMap.get(name);
+                //if they tie
+                if (myInt == max)
+                {
+                    allMap2.put(name, allMap.get(name));
+                }
+                //if there is a new winner
+                if (myInt > max)
+                {
+                    max = myInt;
+                    allMap2.clear();
+                    allMap2.put(name, allMap.get(name));
+                }
+            }
+            allMap = allMap2;
+        }
+
+        //if only one most used
+        if (allMap.size() == 1)
         {
             for (String name: allMap.keySet())
             {
-
+                return name;
             }
         }
 
-        //1. if only one is found, return
-        //return frequency of each and highest returned
         //deal with other tie breakers
+
+        //create edit distance 2 words
+
         //if none are found, call helper functions on all edit d 1 words
         return null;
     }
